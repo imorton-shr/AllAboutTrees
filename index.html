@@ -1,0 +1,1136 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All About Trees!</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    * {
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes sway {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+
+    @keyframes leafFall {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(100px) rotate(360deg); opacity: 0; }
+    }
+
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .swaying {
+      animation: sway 4s ease-in-out infinite;
+    }
+
+    .fact-card {
+      transition: all 0.3s ease;
+    }
+
+    .fact-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .fact-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, padding 0.3s ease;
+    }
+
+    .fact-content.open {
+      max-height: 800px;
+      padding-top: 16px;
+    }
+
+    .btn-bounce:active {
+      transform: scale(0.95);
+    }
+
+    .leaf-decoration {
+      position: absolute;
+      font-size: 24px;
+      animation: leafFall 8s linear infinite;
+    }
+
+    #app-wrapper {
+      min-height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto bg-sky-400">
+  <div id="app-wrapper" style="background: linear-gradient(180deg, #87CEEB 0%, #98D8AA 50%, #4A7C59 100%);">
+   <!-- Floating decorations -->
+   <div class="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+    <span class="leaf-decoration" style="left: 10%; animation-delay: 0s;">🍃</span> <span class="leaf-decoration" style="left: 30%; animation-delay: 2s;">🍂</span> <span class="leaf-decoration" style="left: 50%; animation-delay: 4s;">🌿</span> <span class="leaf-decoration" style="left: 70%; animation-delay: 1s;">🍃</span> <span class="leaf-decoration" style="left: 90%; animation-delay: 3s;">🍂</span>
+   </div>
+   <div class="relative z-10 max-w-4xl mx-auto px-4 py-8 w-full">
+    <!-- Header -->
+    <header class="text-center mb-8">
+     <div class="floating inline-block mb-4">
+      <span class="text-7xl">🌳</span>
+     </div>
+     <h1 id="main-title" class="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-2">All About Trees!</h1>
+     <p id="subtitle" class="text-xl text-white/90 drop-shadow">Click the buttons to learn fun facts! 🌲</p>
+     <div class="mt-4 flex justify-center gap-2 flex-wrap">
+      <button onclick="changeLanguage('en-US')" class="language-btn active px-4 py-2 rounded-lg bg-white/90 text-gray-800 font-medium border-2 border-white shadow-md cursor-pointer hover:bg-white transition" data-lang="en-US">English 🇺🇸</button> <button onclick="changeLanguage('zh-CN')" class="language-btn px-4 py-2 rounded-lg bg-white/50 text-gray-600 font-medium border-2 border-white/50 shadow-md cursor-pointer hover:bg-white/70 transition" data-lang="zh-CN">中文 🇨🇳</button> <button onclick="changeLanguage('th-TH')" class="language-btn px-4 py-2 rounded-lg bg-white/50 text-gray-600 font-medium border-2 border-white/50 shadow-md cursor-pointer hover:bg-white/70 transition" data-lang="th-TH">ไทย 🇹🇭</button> <button onclick="changeLanguage('ja-JP')" class="language-btn px-4 py-2 rounded-lg bg-white/50 text-gray-600 font-medium border-2 border-white/50 shadow-md cursor-pointer hover:bg-white/70 transition" data-lang="ja-JP">日本語 🇯🇵</button>
+     </div>
+    </header><!-- Main Content Grid -->
+    <div class="grid gap-4 md:gap-6">
+     <!-- What is a Tree? -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-green-400">
+      <button onclick="toggleFact('fact1', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">🌲</span>
+        <h2 class="text-xl md:text-2xl font-bold text-green-700">What is a Tree?</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact1" class="fact-content">
+       <div class="bg-green-50 rounded-2xl p-4 border-2 border-green-200">
+        <p class="text-lg text-green-800 leading-relaxed">A <strong>tree</strong> is a very big plant! 🌱</p>
+        <p class="text-lg text-green-800 leading-relaxed mt-3">Trees have a hard <strong>trunk</strong> made of wood. <strong>Branches grow from the trunk.</strong> High up on the branches, <strong>leaves grow</strong> and catch the sunlight!</p>
+        <p class="text-lg text-green-800 leading-relaxed mt-3"><strong>A tree's roots stretch underground</strong> to drink water and hold the tree safe in the ground. 💧</p>
+        <p class="text-lg text-green-800 leading-relaxed mt-3">Trees can live for many, many years! <strong>Some trees have lived for thousands of years!</strong> That's much longer than people! 🎂</p>
+        <p class="text-lg text-green-800 leading-relaxed mt-3">Trees give us fresh air to breathe. They also give homes to birds and animals! 🐦</p>
+       </div>
+      </div>
+     </div><!-- Parts of a Tree -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-amber-400">
+      <button onclick="toggleFact('fact2', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">🪵</span>
+        <h2 class="text-xl md:text-2xl font-bold text-amber-700">Parts of a Tree</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact2" class="fact-content">
+       <div class="bg-amber-50 rounded-2xl p-4 border-2 border-amber-200">
+        <div class="grid md:grid-cols-3 gap-4">
+         <div class="bg-white rounded-xl p-4 text-center shadow-md">
+          <span class="text-4xl block mb-2">👑</span>
+          <h3 class="font-bold text-amber-800 text-lg">Crown</h3>
+          <p class="text-amber-700 mt-2">The top of the tree! It has all the leaves and branches. Like a leafy hat! 🎩</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 text-center shadow-md">
+          <span class="text-4xl block mb-2">🪵</span>
+          <h3 class="font-bold text-amber-800 text-lg">Trunk</h3>
+          <p class="text-amber-700 mt-2">The tall, strong middle part. It holds up the whole tree! Like a strong body. 💪</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 text-center shadow-md">
+          <span class="text-4xl block mb-2">🌱</span>
+          <h3 class="font-bold text-amber-800 text-lg">Roots</h3>
+          <p class="text-amber-700 mt-2"><strong>Roots connect the tree to the ground.</strong> They drink up water and hold the tree in place. 💧</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Roots Section -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-blue-400">
+      <button onclick="toggleFact('fact-roots', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">🌱</span>
+        <h2 class="text-xl md:text-2xl font-bold text-blue-700">All About Roots</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact-roots" class="fact-content">
+       <div class="bg-blue-50 rounded-2xl p-4 border-2 border-blue-200">
+        <p class="text-lg text-blue-800 leading-relaxed"><strong>Roots connect the tree to the ground.</strong> 🪴</p>
+        <p class="text-lg text-blue-800 leading-relaxed mt-3"><strong>They spread far underground,</strong> reaching out in many directions to find water. Roots are like the tree's drinking straws! 💧</p>
+        <p class="text-lg text-blue-800 leading-relaxed mt-3"><strong>Roots also store the tree's food.</strong> They save energy for when the tree needs it most, like in winter or during dry times.</p>
+        <p class="text-lg text-blue-800 leading-relaxed mt-3"><strong>Roots can be big or small.</strong> Some roots are thick and strong. Others are very, very thin—so tiny that <strong>some roots can only be seen with a microscope!</strong> 🔬</p>
+       </div>
+      </div>
+     </div><!-- Trunk Section -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-red-400">
+      <button onclick="toggleFact('fact-trunk', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">🪵</span>
+        <h2 class="text-xl md:text-2xl font-bold text-red-700">All About the Trunk</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact-trunk" class="fact-content">
+       <div class="bg-red-50 rounded-2xl p-4 border-2 border-red-200">
+        <p class="text-lg text-red-800 leading-relaxed"><strong>The trunk supports the tree.</strong> It's like the tree's backbone! 💪 It holds up all the branches and leaves.</p>
+        <p class="text-lg text-red-800 leading-relaxed mt-3"><strong>Some trunks reach the top of the tree.</strong> Others split into many branches as they grow up. Each tree is different!</p>
+        <p class="text-lg text-red-800 leading-relaxed mt-3"><strong>Most trunks have five layers.</strong> 🎂 The <strong>outer layers are called bark.</strong> <strong>The bark covers the trunk</strong> and <strong>protects the inner layers</strong> from cold, sun, and bugs.</p>
+        <p class="text-lg text-red-800 leading-relaxed mt-3"><strong>One layer forms rings.</strong> 🔄 <strong>The more rings a tree has, the older it is!</strong> You can count the rings to find out the tree's age. Isn't that cool? 🔍</p>
+       </div>
+      </div>
+     </div><!-- Crown Section -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-yellow-400">
+      <button onclick="toggleFact('fact-crown', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">👑</span>
+        <h2 class="text-xl md:text-2xl font-bold text-yellow-700">All About the Crown</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact-crown" class="fact-content">
+       <div class="bg-yellow-50 rounded-2xl p-4 border-2 border-yellow-200">
+        <p class="text-lg text-yellow-800 leading-relaxed"><strong>Branches and leaves make up the crown.</strong> 👑 <strong>They give the tree its shape.</strong> That's why trees look so different from each other!</p>
+        <p class="text-lg text-yellow-800 leading-relaxed mt-3"><strong>Leaves come in many shapes and sizes.</strong> 🍃 <strong>Some are large, flat, and thin</strong> like paper. You can see light shine through them!</p>
+        <p class="text-lg text-yellow-800 leading-relaxed mt-3"><strong>Others are hard and narrow, like needles.</strong> 🌲 These are on evergreen trees. They help the tree stay warm in winter.</p>
+       </div>
+      </div>
+     </div><!-- Types of Trees -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-orange-400">
+      <button onclick="toggleFact('fact3', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">🍂</span>
+        <h2 class="text-xl md:text-2xl font-bold text-orange-700">Types of Trees</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact3" class="fact-content">
+       <div class="bg-orange-50 rounded-2xl p-4 border-2 border-orange-200">
+        <div class="grid md:grid-cols-2 gap-4">
+         <div class="bg-white rounded-xl p-4 shadow-md">
+          <div class="text-center mb-3">
+           <span class="text-5xl">🍁</span>
+          </div>
+          <h3 class="font-bold text-orange-800 text-xl text-center">Deciduous Trees</h3>
+          <p class="text-orange-700 mt-3 leading-relaxed">These trees <strong>lose their leaves</strong> in autumn. The leaves turn red, orange, and yellow first! 🎨</p>
+          <p class="text-orange-700 mt-2 leading-relaxed"><strong>Why?</strong> In winter, there is less sun. The tree goes to sleep to save energy. New leaves grow back in spring! 🌸</p>
+          <p class="text-orange-600 mt-2 text-sm font-semibold">Examples:</p>
+          <p class="text-orange-600 text-sm">🌳 Cassia</p>
+          <p class="text-orange-600 text-sm">🌳 Japanese Maple</p>
+          <p class="text-orange-600 text-sm">🌳 Teak</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 shadow-md">
+          <div class="text-center mb-3">
+           <span class="text-5xl">🌲</span>
+          </div>
+          <h3 class="font-bold text-green-800 text-xl text-center">Evergreen Trees</h3>
+          <p class="text-green-700 mt-3 leading-relaxed">These trees <strong>stay green all year</strong>! They keep their leaves or needles even in winter. ❄️</p>
+          <p class="text-green-700 mt-2 leading-relaxed"><strong>Why?</strong> Their leaves are tough and waxy. This helps them stay safe from cold and snow! 💚</p>
+          <p class="text-green-700 mt-2 leading-relaxed">Many evergreens live in <strong>tropical places like Thailand.</strong> 🌴 It's warm there, so they don't lose their leaves!</p>
+          <p class="text-green-600 mt-2 text-sm font-semibold">Examples:</p>
+          <p class="text-green-600 text-sm">🌳 Mango</p>
+          <p class="text-green-600 text-sm">🌳 Coconut</p>
+          <p class="text-green-600 text-sm">🌳 Ficus</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- How Trees Grow -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-emerald-400">
+      <button onclick="toggleFact('fact4', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">📈</span>
+        <h2 class="text-xl md:text-2xl font-bold text-emerald-700">How Trees Grow</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact4" class="fact-content">
+       <div class="bg-emerald-50 rounded-2xl p-4 border-2 border-emerald-200">
+        <div class="flex flex-wrap justify-center gap-3 mb-4">
+         <div class="bg-white rounded-full px-4 py-2 shadow-md flex items-center gap-2">
+          <span class="text-2xl">🌰</span> <span class="text-emerald-700 font-medium">Seed</span>
+         </div><span class="text-2xl self-center">➡️</span>
+         <div class="bg-white rounded-full px-4 py-2 shadow-md flex items-center gap-2">
+          <span class="text-2xl">🌱</span> <span class="text-emerald-700 font-medium">Sprout</span>
+         </div><span class="text-2xl self-center">➡️</span>
+         <div class="bg-white rounded-full px-4 py-2 shadow-md flex items-center gap-2">
+          <span class="text-2xl">🪴</span> <span class="text-emerald-700 font-medium">Sapling</span>
+         </div><span class="text-2xl self-center">➡️</span>
+         <div class="bg-white rounded-full px-4 py-2 shadow-md flex items-center gap-2">
+          <span class="text-2xl">🌳</span> <span class="text-emerald-700 font-medium">Tree!</span>
+         </div>
+        </div>
+        <p class="text-lg text-emerald-800 leading-relaxed">Trees start as tiny <strong>seeds</strong>. With water, sun, and soil, they grow into big, tall trees!</p>
+        <p class="text-lg text-emerald-800 leading-relaxed mt-3">Trees make their own food using sunlight! This is called <strong>photosynthesis</strong> (foh-toh-SIN-thuh-sis). 🌞</p>
+        <p class="text-lg text-emerald-800 leading-relaxed mt-3">Each year, the trunk grows a new ring inside. You can count the rings to find out how old a tree is! 🔍</p>
+       </div>
+      </div>
+     </div><!-- Fun Facts -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-purple-400">
+      <button onclick="toggleFact('fact5', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">⭐</span>
+        <h2 class="text-xl md:text-2xl font-bold text-purple-700">Fun Tree Facts!</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact5" class="fact-content">
+       <div class="bg-purple-50 rounded-2xl p-4 border-2 border-purple-200">
+        <div class="grid gap-3">
+         <div class="bg-white rounded-xl p-4 flex items-start gap-3 shadow-md">
+          <span class="text-3xl">🏆</span>
+          <p class="text-purple-800">The <strong>tallest trees</strong> in the world are taller than 30-storey buildings! They are called Redwoods.</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 flex items-start gap-3 shadow-md">
+          <span class="text-3xl">🎂</span>
+          <p class="text-purple-800">Some trees are <strong>over 5,000 years old</strong>! They were alive when the pyramids were built.</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 flex items-start gap-3 shadow-md">
+          <span class="text-3xl">🍎</span>
+          <p class="text-purple-800">Trees give us <strong>yummy foods</strong> like apples, oranges, cherries, and nuts!</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 flex items-start gap-3 shadow-md">
+          <span class="text-3xl">🏠</span>
+          <p class="text-purple-800">One big tree can be home to <strong>hundreds of animals</strong>: birds, squirrels, bugs, and more!</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 flex items-start gap-3 shadow-md">
+          <span class="text-3xl">💨</span>
+          <p class="text-purple-800">Trees <strong>clean our air</strong>! They breathe in bad air and breathe out fresh air for us.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Why Trees Matter -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-teal-400">
+      <button onclick="toggleFact('fact6', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">💚</span>
+        <h2 class="text-xl md:text-2xl font-bold text-teal-700">Why Trees Matter</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact6" class="fact-content">
+       <div class="bg-teal-50 rounded-2xl p-4 border-2 border-teal-200">
+        <p class="text-lg text-teal-800 leading-relaxed mb-4">Trees are <strong>super important</strong> for our planet! Here's why:</p>
+        <div class="grid md:grid-cols-2 gap-3">
+         <div class="bg-white rounded-xl p-3 flex items-center gap-3 shadow-md">
+          <span class="text-3xl">🌬️</span>
+          <p class="text-teal-700">They give us <strong>oxygen</strong> to breathe</p>
+         </div>
+         <div class="bg-white rounded-xl p-3 flex items-center gap-3 shadow-md">
+          <span class="text-3xl">🌡️</span>
+          <p class="text-teal-700">They keep Earth <strong>cool</strong></p>
+         </div>
+         <div class="bg-white rounded-xl p-3 flex items-center gap-3 shadow-md">
+          <span class="text-3xl">🦉</span>
+          <p class="text-teal-700">They give <strong>homes</strong> to animals</p>
+         </div>
+         <div class="bg-white rounded-xl p-3 flex items-center gap-3 shadow-md">
+          <span class="text-3xl">☔</span>
+          <p class="text-teal-700">They stop <strong>floods</strong></p>
+         </div>
+        </div>
+        <div class="mt-4 bg-white rounded-xl p-4 text-center shadow-md">
+         <p class="text-xl text-teal-800 font-bold">🌳 Plant a tree today! 🌳</p>
+         <p class="text-teal-600 mt-1">Every tree helps make our world better!</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Footer -->
+    <footer class="text-center mt-8 pb-4">
+     <div class="swaying inline-block">
+      <span class="text-5xl">🌳🌲🌴</span>
+     </div>
+     <p class="text-white/80 mt-2 text-lg">Keep learning about nature! 🌿</p>
+    </footer>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: "All About Trees!",
+      subtitle: "Click the buttons to learn fun facts! 🌲",
+      background_color: "#87CEEB",
+      text_color: "#166534",
+      accent_color: "#22c55e",
+      card_color: "#ffffff",
+      button_color: "#4ade80",
+      font_family: "Fredoka"
+    };
+
+    let activeCardId = null;
+    let selectedLanguage = "en-US";
+    let currentAudio = null;
+
+    // Audio URLs for each card and language
+    // Replace "your-url-here" with actual audio file URLs from ElevenLabs or your audio service
+    const audioUrls = {
+       "en-US": {
+    "fact1": "Fact1English.mp3",
+    "fact2": "Fact2English.mp3",
+    "fact-roots": "FactRootsEnglish.mp3",
+    "fact-trunk": "FactTrunkEnglish.mp3",
+    "fact-crown": "FactCrownEnglish.mp3",
+    "fact3": "Fact3English.mp3",
+    "fact4": "Fact4English.mp3",
+    "fact5": "Fact5English.mp3",
+    "fact6": "Fact6English.mp3"
+  },
+  "zh-CN": {
+    "fact1": "Fact1Chinese.mp3",
+    "fact2": "Fact2Chinese.mp3",
+    "fact-roots": "Factrootschinese.mp3",
+    "fact-trunk": "FactTrunkChinese.mp3",
+    "fact-crown": "FactCrownChinese.mp3",
+    "fact3": "Fact3Chinese.mp3",
+    "fact4": "Fact4Chinese.mp3",
+    "fact5": "Fact5Chinese.mp3",
+    "fact6": "Fact6Chinese.mp3"
+  },
+  "th-TH": {
+    "fact1": "Fact1Thai.mp3",
+    "fact2": "Fact2Thai.mp3",
+    "fact-roots": "FactRootsThai.mp3",
+    "fact-trunk": "FactTrunkThai.mp3",
+    "fact-crown": "FactCrownThai.mp3",
+    "fact3": "Fact3Thai.mp3",
+    "fact4": "Fact4Thai.mp3",
+    "fact5": "Fact5Thai.mp3",
+    "fact6": "Fact6Thai.mp3"
+  },
+  "ja-JP": {
+    "fact1": "Fact1Japan.mp3",
+    "fact2": "Fact2Japan.mp3",
+    "fact-roots": "FactRootsJapan.mp3",
+    "fact-trunk": "FactTrunkJapan.mp3",
+    "fact-crown": "FactCrownJapan.mp3",
+    "fact3": "Fact3Japan.mp3",
+    "fact4": "Fact4Japan.mp3",
+    "fact5": "Fact5Japan.mp3",
+    "fact6": "Fact6Japan.mp3"
+      }
+    };
+
+    function playAudio(cardId) {
+      const audioUrl = audioUrls[selectedLanguage]?.[cardId];
+      
+      // If no audio URL configured, skip playback
+      if (!audioUrl || audioUrl === "your-url-here") {
+        return;
+      }
+
+      // Stop any currently playing audio
+      stopAudio();
+
+      try {
+        currentAudio = new Audio(audioUrl);
+        currentAudio.onended = () => {
+          activeCardId = null;
+          currentAudio = null;
+        };
+        currentAudio.onerror = () => {
+          console.error(`Failed to load audio for ${cardId} in ${selectedLanguage}`);
+          activeCardId = null;
+          currentAudio = null;
+        };
+        currentAudio.play().catch(err => {
+          console.error(`Failed to play audio: ${err}`);
+          activeCardId = null;
+          currentAudio = null;
+        });
+      } catch (err) {
+        console.error(`Audio playback error: ${err}`);
+        activeCardId = null;
+      }
+    }
+
+    function stopAudio() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+      activeCardId = null;
+    }
+
+    const translations = {
+      "en-US": {
+        "main-title": "All About Trees!",
+        "subtitle": "Click the buttons to learn fun facts! 🌲",
+        "language-en": "English 🇺🇸",
+        "language-zh": "中文 🇨🇳",
+        "language-th": "ไทย 🇹🇭",
+        "language-ja": "日本語 🇯🇵",
+        "fact1-heading": "What is a Tree?",
+        "fact1-content": `A <strong>tree</strong> is a very big plant! 🌱
+
+Trees have a hard <strong>trunk</strong> made of wood. <strong>Branches grow from the trunk.</strong> High up on the branches, <strong>leaves grow</strong> and catch the sunlight!
+
+<strong>A tree's roots stretch underground</strong> to drink water and hold the tree safe in the ground. 💧
+
+Trees can live for many, many years! <strong>Some trees have lived for thousands of years!</strong> That's much longer than people! 🎂
+
+Trees give us fresh air to breathe. They also give homes to birds and animals! 🐦`,
+        "fact2-heading": "Parts of a Tree",
+        "crown-title": "Crown",
+        "crown-text": "The top of the tree! It has all the leaves and branches. Like a leafy hat! 🎩",
+        "trunk-title": "Trunk",
+        "trunk-text": "The tall, strong middle part. It holds up the whole tree! Like a strong body. 💪",
+        "roots-title": "Roots",
+        "roots-text": "<strong>Roots connect the tree to the ground.</strong> They drink up water and hold the tree in place. 💧",
+        "fact-roots-heading": "All About Roots",
+        "fact-roots-content": `<strong>Roots connect the tree to the ground.</strong> 🪴
+
+<strong>They spread far underground,</strong> reaching out in many directions to find water. Roots are like the tree's drinking straws! 💧
+
+<strong>Roots also store the tree's food.</strong> They save energy for when the tree needs it most, like in winter or during dry times.
+
+<strong>Roots can be big or small.</strong> Some roots are thick and strong. Others are very, very thin—so tiny that <strong>some roots can only be seen with a microscope!</strong> 🔬`,
+        "fact-trunk-heading": "All About the Trunk",
+        "fact-trunk-content": `<strong>The trunk supports the tree.</strong> It's like the tree's backbone! 💪 It holds up all the branches and leaves.
+
+<strong>Some trunks reach the top of the tree.</strong> Others split into many branches as they grow up. Each tree is different!
+
+<strong>Most trunks have five layers.</strong> 🎂 The <strong>outer layers are called bark.</strong> <strong>The bark covers the trunk</strong> and <strong>protects the inner layers</strong> from cold, sun, and bugs.
+
+<strong>One layer forms rings.</strong> 🔄 <strong>The more rings a tree has, the older it is!</strong> You can count the rings to find out the tree's age. Isn't that cool? 🔍`,
+        "fact-crown-heading": "All About the Crown",
+        "fact-crown-content": `<strong>Branches and leaves make up the crown.</strong> 👑 <strong>They give the tree its shape.</strong> That's why trees look so different from each other!
+
+<strong>Leaves come in many shapes and sizes.</strong> 🍃 <strong>Some are large, flat, and thin</strong> like paper. You can see light shine through them!
+
+<strong>Others are hard and narrow, like needles.</strong> 🌲 These are on evergreen trees. They help the tree stay warm in winter.`,
+        "fact3-heading": "Types of Trees",
+        "deciduous-title": "Deciduous Trees",
+        "deciduous-text": `These trees <strong>lose their leaves</strong> in autumn. The leaves turn red, orange, and yellow first! 🎨
+
+<strong>Why?</strong> In winter, there is less sun. The tree goes to sleep to save energy. New leaves grow back in spring! 🌸
+
+<strong>Examples:</strong>
+🌳 Cassia
+🌳 Japanese Maple
+🌳 Teak`,
+        "evergreen-title": "Evergreen Trees",
+        "evergreen-text": `These trees <strong>stay green all year</strong>! They keep their leaves or needles even in winter. ❄️
+
+<strong>Why?</strong> Their leaves are tough and waxy. This helps them stay safe from cold and snow! 💚
+
+Many evergreens live in <strong>tropical places like Thailand.</strong> 🌴 It's warm there, so they don't lose their leaves!
+
+<strong>Examples:</strong>
+🌳 Mango
+🌳 Coconut
+🌳 Ficus`,
+        "fact4-heading": "How Trees Grow",
+        "seed": "Seed",
+        "sprout": "Sprout",
+        "sapling": "Sapling",
+        "tree": "Tree!",
+        "fact4-content": `Trees start as tiny <strong>seeds</strong>. With water, sun, and soil, they grow into big, tall trees!
+
+Trees make their own food using sunlight! This is called <strong>photosynthesis</strong> (foh-toh-SIN-thuh-sis). 🌞
+
+Each year, the trunk grows a new ring inside. You can count the rings to find out how old a tree is! 🔍`,
+        "fact5-heading": "Fun Tree Facts!",
+        "fact5-1": "The <strong>tallest trees</strong> in the world are taller than 30-storey buildings! They are called Redwoods.",
+        "fact5-2": "Some trees are <strong>over 5,000 years old</strong>! They were alive when the pyramids were built.",
+        "fact5-3": "Trees give us <strong>yummy foods</strong> like apples, oranges, cherries, and nuts!",
+        "fact5-4": "One big tree can be home to <strong>hundreds of animals</strong>: birds, squirrels, bugs, and more!",
+        "fact5-5": "Trees <strong>clean our air</strong>! They breathe in bad air and breathe out fresh air for us.",
+        "fact6-heading": "Why Trees Matter",
+        "fact6-intro": "Trees are <strong>super important</strong> for our planet! Here's why:",
+        "fact6-1": "They give us <strong>oxygen</strong> to breathe",
+        "fact6-2": "They keep Earth <strong>cool</strong>",
+        "fact6-3": "They give <strong>homes</strong> to animals",
+        "fact6-4": "They stop <strong>floods</strong>",
+        "fact6-final": "🌳 Plant a tree today! 🌳",
+        "fact6-final-text": "Every tree helps make our world better!",
+        "footer-text": "Keep learning about nature! 🌿"
+      },
+      "zh-CN": {
+        "main-title": "关于树木的一切！",
+        "subtitle": "点击按钮了解有趣的事实！🌲",
+        "language-en": "English 🇺🇸",
+        "language-zh": "中文 🇨🇳",
+        "language-th": "ไทย 🇹🇭",
+        "language-ja": "日本語 🇯🇵",
+        "fact1-heading": "什么是树木？",
+        "fact1-content": `<strong>树</strong>是一种非常大的植物！🌱
+
+树有一个坚硬的<strong>树干</strong>，由木头制成。<strong>树枝从树干生长出来。</strong>在树枝的高处，<strong>叶子生长</strong>并捕捉阳光！
+
+<strong>树根深入地下</strong>吸收水分，并将树木固定在地上。💧
+
+树木可以活很多年！<strong>有些树已经活了数千年！</strong>这比人类寿命长得多！🎂
+
+树给我们新鲜空气呼吸。它们也给鸟类和动物提供家园！🐦`,
+        "fact2-heading": "树的各部分",
+        "crown-title": "树冠",
+        "crown-text": "树的顶部！它有所有的叶子和树枝。就像一个多叶的帽子！🎩",
+        "trunk-title": "树干",
+        "trunk-text": "高大、结实的中间部分。它支撑整棵树！就像强壮的身体。💪",
+        "roots-title": "树根",
+        "roots-text": "<strong>树根连接树和地面。</strong>它们吸收水并将树固定在原地。💧",
+        "fact-roots-heading": "关于树根的一切",
+        "fact-roots-content": `<strong>树根连接树和地面。</strong>🪴
+
+<strong>它们在地下蔓延，</strong>向多个方向延伸以寻找水。树根就像树的吸管！💧
+
+<strong>树根还储存树的养分。</strong>它们保存能量供树在最需要的时候使用，比如冬天或干旱时期。
+
+<strong>树根有大有小。</strong>有些根又厚又坚实。有些根非常细，细到<strong>有些根只能用显微镜才能看到！</strong>🔬`,
+        "fact-trunk-heading": "关于树干的一切",
+        "fact-trunk-content": `<strong>树干支撑树木。</strong>就像树的脊骨！💪它支撑所有的树枝和叶子。
+
+<strong>有些树干一直延伸到树的顶部。</strong>其他的在向上生长时分裂成许多分枝。每棵树都不一样！
+
+<strong>大多数树干有五层。</strong>🎂<strong>外层称为树皮。</strong><strong>树皮覆盖树干</strong>并<strong>保护内层</strong>免受寒冷、阳光和虫子的伤害。
+
+<strong>其中一层形成年轮。</strong>🔄<strong>树的年轮越多，树就越老！</strong>你可以数年轮来找出树的年龄。这不是很酷吗？🔍`,
+        "fact-crown-heading": "关于树冠的一切",
+        "fact-crown-content": `<strong>树枝和叶子组成树冠。</strong>👑<strong>它们给树赋予形状。</strong>这就是为什么树看起来彼此不同！
+
+<strong>叶子有多种形状和大小。</strong>🍃<strong>有些又大又平又薄</strong>如纸一样。你可以看到光线透过它们！
+
+<strong>其他的又硬又窄，像针一样。</strong>🌲这些在常青树上。它们帮助树在冬天保持温暖。`,
+        "fact3-heading": "树的类型",
+        "deciduous-title": "落叶树",
+        "deciduous-text": `这些树<strong>在秋天落叶</strong>。叶子先变成红色、橙色和黄色！🎨
+
+<strong>为什么？</strong>冬天阳光较少。树进入睡眠状态以节省能量。春天新叶会长出来！🌸
+
+<strong>例子：</strong>
+🌳 槐树
+🌳 日本枫
+🌳 柚木`,
+        "evergreen-title": "常青树",
+        "evergreen-text": `这些树<strong>全年保持绿色</strong>！即使在冬天它们也保持叶子或针叶。❄️
+
+<strong>为什么？</strong>它们的叶子又硬又有蜡质。这有助于它们在寒冷和雪中保持安全！💚
+
+许多常青树生长在<strong>泰国等热带地区。</strong>🌴那里很温暖，所以它们不会失去叶子！
+
+<strong>例子：</strong>
+🌳 芒果
+🌳 椰子
+🌳 榕树`,
+        "fact4-heading": "树如何生长",
+        "seed": "种子",
+        "sprout": "芽",
+        "sapling": "树苗",
+        "tree": "树！",
+        "fact4-content": `树开始时是微小的<strong>种子</strong>。有了水、阳光和土壤，它们长成高大的树！
+
+树用阳光制造自己的食物！这叫做<strong>光合作用</strong>（guāng-hé-zuòyòng）。🌞
+
+每年，树干内部长出一个新的年轮。你可以数年轮来找出树的年龄！🔍`,
+        "fact5-heading": "有趣的树木事实！",
+        "fact5-1": "世界上<strong>最高的树</strong>比30层楼还高！它们被称为红杉。",
+        "fact5-2": "<strong>有些树已经有5000多年历史了</strong>！当金字塔被建造时，它们就已经活着了。",
+        "fact5-3": "树给我们提供<strong>美味的食物</strong>，如苹果、橙子、樱桃和坚果！",
+        "fact5-4": "一棵大树可以是<strong>数百只动物</strong>的家：鸟类、松鼠、昆虫等！",
+        "fact5-5": "树<strong>清洁我们的空气</strong>！它们吸入坏空气，呼出新鲜空气给我们。",
+        "fact6-heading": "树为什么重要",
+        "fact6-intro": "树对我们的星球<strong>非常重要</strong>！原因如下：",
+        "fact6-1": "它们给我们提供<strong>氧气</strong>呼吸",
+        "fact6-2": "它们让地球<strong>保持凉爽</strong>",
+        "fact6-3": "它们为<strong>动物提供家园</strong>",
+        "fact6-4": "它们防止<strong>洪水</strong>",
+        "fact6-final": "🌳 今天种一棵树！🌳",
+        "fact6-final-text": "每棵树都有助于让我们的世界变得更好！",
+        "footer-text": "继续学习大自然！🌿"
+      },
+      "th-TH": {
+        "main-title": "เรียนรู้เกี่ยวกับต้นไม้ทั้งหมด!",
+        "subtitle": "คลิกปุ่มเพื่อเรียนรู้ข้อเท็จจริงที่สนุก! 🌲",
+        "language-en": "English 🇺🇸",
+        "language-zh": "中文 🇨🇳",
+        "language-th": "ไทย 🇹🇭",
+        "language-ja": "日本語 🇯🇵",
+        "fact1-heading": "ต้นไม้คืออะไร?",
+        "fact1-content": `<strong>ต้นไม้</strong>เป็นพืชขนาดใหญ่มาก! 🌱
+
+ต้นไม้มี<strong>ลำต้น</strong>ที่เป็นไม้แข็ง <strong>กิ่งก้านโผล่ออกมาจากลำต้น</strong> สูงขึ้นไปบนกิ่ง <strong>ใบไม้จะแตกออกมา</strong>และรับแสงแดด!
+
+<strong>รากของต้นไม้ยืดออกไปใต้ดิน</strong>เพื่อดูดน้ำและยึดต้นไม้ไว้ในดิน 💧
+
+ต้นไม้สามารถมีชีวิตอยู่มาหลายปีแล้ว! <strong>บางต้นไม้มีอายุหลายพันปี!</strong> นั่นนานกว่าคนเรามากกว่า! 🎂
+
+ต้นไม้ให้อากาศบริสุทธิ์ให้เราหายใจ พวกมันยังให้บ้านกับนกและสัตว์ป่า! 🐦`,
+        "fact2-heading": "ส่วนต่างๆของต้นไม้",
+        "crown-title": "มงกุฎ",
+        "crown-text": "ด้านบนของต้นไม้! มีใบไม้และกิ่งก้านทั้งหมด เหมือนหมวกใบไม้! 🎩",
+        "trunk-title": "ลำต้น",
+        "trunk-text": "ส่วนตรงกลางที่สูงและแข็งแรง มันยึดต้นไม้ทั้งหมด! เหมือนกายที่แข็งแรง 💪",
+        "roots-title": "ราก",
+        "roots-text": "<strong>ราตเชื่อมต้นไม้กับดิน</strong> พวกมันดูดน้ำและยึดต้นไม้ไว้ในที่ 💧",
+        "fact-roots-heading": "ทั้งหมดเกี่ยวกับรากของต้นไม้",
+        "fact-roots-content": `<strong>รากเชื่อมต้นไม้กับดิน</strong> 🪴
+
+<strong>พวกเขากระจายออกไปใต้ดิน</strong>ยืดออกไปในหลายทิศเพื่อหาน้ำ ราตเหมือนหลอด吸น้ำของต้นไม้! 💧
+
+<strong>รากยังเก็บอาหารของต้นไม้</strong> พวกมันบันทึกพลังงานสำหรับเมื่อต้นไม้ต้องการมากที่สุด เช่นในฤดูหนาวหรือช่วงแล้ง
+
+<strong>รากอาจใหญ่หรือเล็กได้</strong> บางรากหนาและแข็งแรง บางรากบางมากเสียจนว่า<strong>บางรากมองไม่เห็นด้วยตาเปล่าเท่านั้น!</strong> 🔬`,
+        "fact-trunk-heading": "เรียนรู้ทั้งหมดเกี่ยวกับลำต้น",
+        "fact-trunk-content": `<strong>ลำต้นรองรับต้นไม้</strong> มันเหมือนกระดูกสันหลังของต้นไม้! 💪 มันยึดกิ่งและใบไม้ทั้งหมด
+
+<strong>บางลำต้นยืดไปถึงด้านบนของต้นไม้</strong> บางอันแยกออกเป็นกิ่งมากมายขณะที่เติบโต แต่ละต้นไม้ก็แตกต่างกัน!
+
+<strong>ลำต้นส่วนใหญ่มี 5 ชั้น</strong> 🎂 <strong>ชั้นด้านนอกเรียกว่าเปลือก</strong> <strong>เปลือกปกคลุมลำต้น</strong>และ<strong>ป้องกันชั้นด้านในจาก</strong>ความหนาว แดด และแมลง
+
+<strong>ชั้นหนึ่งเกิดเป็นวงแหวน</strong> 🔄 <strong>ต้นไม้มีวงแหวนมากเท่าไหร่ก็แก่มากเท่านั้น!</strong> คุณสามารถนับวงแหวนเพื่อหาอายุของต้นไม้ นั่นเจ๋งไหม? 🔍`,
+        "fact-crown-heading": "เรียนรู้ทั้งหมดเกี่ยวกับมงกุฎ",
+        "fact-crown-content": `<strong>กิ่งและใบไม้ประกอบเป็นมงกุฎ</strong> 👑 <strong>พวกเขาให้รูปร่างแก่ต้นไม้</strong> นั่นคือเหตุผลที่ต้นไม้ดูแตกต่างกันไป!
+
+<strong>ใบไม้มีหลายรูปร่างและขนาด</strong> 🍃 <strong>บางใบใหญ่ แบน และบาง</strong>เหมือนกระดาษ คุณสามารถเห็นแสงเรืองผ่านมัน!
+
+<strong>บางอันแข็งและแคบ เหมือนเข็ม</strong> 🌲 สิ่งเหล่านี้อยู่บนต้นไม้ที่เป็นนิตยสารนิรันดร์ พวกมันช่วยให้ต้นไม้อบอุ่นในฤดูหนาว`,
+        "fact3-heading": "ประเภทของต้นไม้",
+        "deciduous-title": "ต้นไม้ร่วง",
+        "deciduous-text": `ต้นไม้เหล่านี้<strong>ร่วงใบในฤดูใบไม้ร่วง</strong> ใบไม้จะเปลี่ยนเป็นสีแดง ส้ม และเหลืองก่อน! 🎨
+
+<strong>ทำไม?</strong>ในฤดูหนาวแดดน้อยลง ต้นไม้เข้านอนหลับเพื่อประหยัดพลังงาน ใบไม้ใหม่จะออกมาในฤดูใบไม้ผลิ! 🌸
+
+<strong>ตัวอย่าง:</strong>
+🌳 คนัยนิต
+🌳 เมเปิลญี่ปุ่น
+🌳 สักหา`,
+        "evergreen-title": "ต้นไม้เป็นนิตยสารนิรันดร์",
+        "evergreen-text": `ต้นไม้เหล่านี้<strong>สีเขียวตลอดปี</strong>! พวกมันเก็บใบไม้หรือเข็มไว้แม้ในฤดูหนาว ❄️
+
+<strong>ทำไม?</strong>ใบไม้ของพวกเขาแข็งและเคลือบด้วยขี้ผึ้ง สิ่งนี้ช่วยให้พวกเขาปลอดภัยจากความหนาวและหิมะ! 💚
+
+ต้นไม้เป็นนิตยสารนิรันดร์จำนวนมากอาศัยอยู่ใน<strong>พื้นที่เขตร้อนเช่นประเทศไทย</strong> 🌴 มันอบอุ่นที่นั่นจึงไม่หลนใบ!
+
+<strong>ตัวอย่าง:</strong>
+🌳 มะม่วง
+🌳 มะพร้าว
+🌳 ฟิกัส`,
+        "fact4-heading": "ต้นไม้เติบโตอย่างไร",
+        "seed": "เมล็ด",
+        "sprout": "งอก",
+        "sapling": "ต้นอ่อน",
+        "tree": "ต้นไม้!",
+        "fact4-content": `ต้นไม้เริ่มต้นจาก<strong>เมล็ด</strong>ขนาดเล็ก ด้วยน้ำ แดด และดิน พวกมันจะเติบโตเป็นต้นไม้ขนาดใหญ่!
+
+ต้นไม้สร้างอาหารของตัวเองด้วยแสงแดด! นี่เรียกว่า<strong>การสังเคราะห์ด้วยแสง</strong> 🌞
+
+ทุกปี ลำต้นจะเพิ่มวงแหวนใหม่ที่ด้านใน คุณสามารถนับวงแหวนเพื่อหาอายุของต้นไม้! 🔍`,
+        "fact5-heading": "ข้อเท็จจริงที่สนุกเกี่ยวกับต้นไม้!",
+        "fact5-1": "<strong>ต้นไม้ที่สูงที่สุด</strong>ในโลกสูงกว่าอาคาร 30 ชั้น! พวกมันเรียกว่าสน",
+        "fact5-2": "<strong>บางต้นไม้มีอายุกว่า 5000 ปี</strong>! พวกมันมีชีวิตอยู่ตอนที่พีระมิดถูกสร้าง",
+        "fact5-3": "ต้นไม้ให้อาหารอร่อยแก่เรา<strong>เช่นแอปเปิ้ล ส้ม เชอร์รี่ และถั่ว!</strong>",
+        "fact5-4": "ต้นไม้ขนาดใหญ่หนึ่งต้นสามารถเป็นบ้านให้<strong>สัตว์ร้อยตัว:</strong> นก กระรอก แมลง และอื่น ๆ!",
+        "fact5-5": "ต้นไม้<strong>ทำความสะอาดอากาศของเรา</strong>! พวกมันหายใจอากาศเสีย และหายใจออกอากาศบริสุทธิ์ให้เรา",
+        "fact6-heading": "เหตุใดต้นไม้จึงสำคัญ",
+        "fact6-intro": "ต้นไม้<strong>สำคัญมากสำหรับดาวเคราะห์ของเรา</strong>! นี่คือเหตุผล:",
+        "fact6-1": "พวกมันให้<strong>ออกซิเจน</strong>ให้เราหายใจ",
+        "fact6-2": "พวกมันให้โลก<strong>หนาวเย็น</strong>",
+        "fact6-3": "พวกมันให้<strong>บ้าน</strong>กับสัตว์",
+        "fact6-4": "พวกมันป้องกัน<strong>น้ำท่วม</strong>",
+        "fact6-final": "🌳 ปลูกต้นไม้วันนี้! 🌳",
+        "fact6-final-text": "ต้นไม้ทุกต้นช่วยให้โลกของเราดีขึ้น!",
+        "footer-text": "เรียนรู้ต่อเกี่ยวกับธรรมชาติ! 🌿"
+      },
+      "ja-JP": {
+        "main-title": "すべての木について!",
+        "subtitle": "ボタンをクリックして楽しい事実を学ぶ! 🌲",
+        "language-en": "English 🇺🇸",
+        "language-zh": "中文 🇨🇳",
+        "language-th": "ไทย 🇹🇭",
+        "language-ja": "日本語 🇯🇵",
+        "fact1-heading": "木とは何ですか?",
+        "fact1-content": `<strong>木</strong>はとても大きな植物です！🌱
+
+木には木でできた硬い<strong>幹</strong>があります。<strong>枝は幹から生えます。</strong> 枝の高いところに、<strong>葉が生え</strong>て日光を受けます!
+
+<strong>木の根は地面の下に伸び</strong>、水を吸い、木を地面に固定します。💧
+
+木は何年も生きることができます！<strong>何千年も生きた木もあります！</strong>それは人間よりずっと長いです！🎂
+
+木は呼吸する新鮮な空気をくれます。また、鳥や動物の家を提供しています！🐦`,
+        "fact2-heading": "木の部分",
+        "crown-title": "樹冠",
+        "crown-text": "木の上部！すべての葉と枝があります。葉っぱのような帽子のように！🎩",
+        "trunk-title": "幹",
+        "trunk-text": "背が高くて丈夫な真ん中の部分です。木全体を支えています！強い体のように。💪",
+        "roots-title": "根",
+        "roots-text": "<strong>根は木を地面に接続します。</strong>水を吸い上げ、木をその場に固定します。💧",
+        "fact-roots-heading": "根についてのすべて",
+        "fact-roots-content": `<strong>根は木を地面に接続します。</strong>🪴
+
+<strong>水を見つけるために、地下に広がり、</strong>多くの方向に伸びます。根は木の飲む管のようなものです！💧
+
+<strong>根は木の食べ物も保存します。</strong>冬や乾季など、木が最も必要とするときのために、エネルギーを節約します。
+
+<strong>根は大きくも小さくもできます。</strong>太くて丈夫な根もあります。他のものは非常に薄く、<strong>顕微鏡でのみ見える根さえあります！</strong>🔬`,
+        "fact-trunk-heading": "幹についてのすべて",
+        "fact-trunk-content": `<strong>幹は木を支えます。</strong>それは木の脊椎のようなものです！💪 すべての枝と葉を支えています。
+
+<strong>ある幹は木の上まで達します。</strong>他のものは成長するにつれて多くの枝に分かれます。各木は異なります！
+
+<strong>ほとんどの幹は5層あります。</strong>🎂 <strong>外層は樹皮と呼ばれます。</strong><strong>樹皮は幹を覆い、</strong><strong>内層を</strong>寒冷、日光、虫から保護します。
+
+<strong>1つの層が輪を形成します。</strong>🔄 <strong>木が多くの輪を持つほど、それは古いです！</strong>輪を数えることで木の年齢を知ることができます。クールではありませんか？🔍`,
+        "fact-crown-heading": "樹冠についてのすべて",
+        "fact-crown-content": `<strong>枝と葉が樹冠を構成します。</strong>👑 <strong>彼らは木に形を与えます。</strong>それが木がお互いに異なって見える理由です！
+
+<strong>葉はさまざまな形とサイズで見えます。</strong>🍃 <strong>大きくて平らで薄い</strong>紙のように。光がそれらを通して輝くのを見ることができます！
+
+<strong>他の人は固くて狭く、針のようです。</strong>🌲 これらは常緑樹にあります。冬に木を暖かく保つのに役立ちます。`,
+        "fact3-heading": "木の種類",
+        "deciduous-title": "落葉樹",
+        "deciduous-text": `これらの木は<strong>秋に葉を落とします</strong>。葉は最初に赤、オレンジ、黄色に変わります！🎨
+
+<strong>なぜ?</strong>冬には太陽が少なくなります。木は眠りについてエネルギーを節約します。春に新しい葉が生えます！🌸
+
+<strong>例：</strong>
+🌳 センイチノキ
+🌳 日本カエデ
+🌳 チーク`,
+        "evergreen-title": "常緑樹",
+        "evergreen-text": `これらの木は<strong>一年中緑色のままです</strong>！冬でも葉や針を保ちます。❄️
+
+<strong>なぜ?</strong>彼らの葉は硬くてワックスのようなものです。これは彼らが寒冷と雪から安全に保つのに役立ちます！💚
+
+多くの常緑樹は<strong>タイのような熱帯地域に住んでいます。</strong>🌴 そこは暖かいので、落葉しません！
+
+<strong>例：</strong>
+🌳 マンゴー
+🌳 ココナッツ
+🌳 フィカス`,
+        "fact4-heading": "木はどのように成長するか",
+        "seed": "種子",
+        "sprout": "芽",
+        "sapling": "苗木",
+        "tree": "木!",
+        "fact4-content": `木は小さな<strong>種子</strong>として始まります。水、太陽、土があれば、大きな背の高い木に成長します！
+
+木は太陽光を使って独自の食べ物を作ります！これは<strong>光合成</strong>と呼ばれます（こうごうせい）。🌞
+
+毎年、幹の内側に新しい輪が成長します。輪を数えることで木の年齢を知ることができます！🔍`,
+        "fact5-heading": "楽しい木の事実!",
+        "fact5-1": "世界で<strong>最も背の高い木</strong>は30階建てのビルより背が高いです！これらはセコイアと呼ばれています。",
+        "fact5-2": "<strong>樹齢5,000年以上の木</strong>もあります！ピラミッドが建てられたときに生きていました。",
+        "fact5-3": "木は<strong>リンゴ、オレンジ、チェリー、ナッツなどのおいしい食べ物を</strong>与えてくれます！",
+        "fact5-4": "1つの大きな木は<strong>何百もの動物の</strong>家になることができます：鳥、リス、虫など！",
+        "fact5-5": "木は<strong>空気をきれいにします</strong>！彼らは悪い空気を吸い込み、私たちのために新鮮な空気を吐き出します。",
+        "fact6-heading": "木が重要な理由",
+        "fact6-intro": "木は<strong>私たちの惑星にとって非常に重要です</strong>！理由は次のとおりです：",
+        "fact6-1": "彼らは呼吸する<strong>酸素</strong>を私たちに与えます",
+        "fact6-2": "彼らは地球を<strong>涼しく</strong>保ちます",
+        "fact6-3": "彼らは<strong>家</strong>を動物に与えます",
+        "fact6-4": "彼らは<strong>洪水</strong>を止めます",
+        "fact6-final": "🌳 今日、木を植えてください！🌳",
+        "fact6-final-text": "すべての木が私たちの世界をより良くするのを助けます！",
+        "footer-text": "自然について学び続けてください！🌿"
+      }
+    };
+
+    function translatePage(langCode) {
+      const lang = translations[langCode] || translations["en-US"];
+      
+      // Update main elements
+      document.getElementById('main-title').textContent = lang['main-title'];
+      document.getElementById('subtitle').textContent = lang['subtitle'];
+      
+      // Update language button labels
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        const btnLang = btn.dataset.lang;
+        if (btnLang === 'en-US') btn.textContent = lang['language-en'];
+        else if (btnLang === 'zh-CN') btn.textContent = lang['language-zh'];
+        else if (btnLang === 'th-TH') btn.textContent = lang['language-th'];
+        else if (btnLang === 'ja-JP') btn.textContent = lang['language-ja'];
+      });
+      
+      // Fact 1 - What is a Tree?
+      const fact1Btn = document.querySelector('[onclick="toggleFact(\'fact1\'"]');
+      if (fact1Btn) fact1Btn.querySelector('h2').textContent = lang['fact1-heading'];
+      const fact1Content = document.getElementById('fact1');
+      if (fact1Content) {
+        fact1Content.querySelector('.bg-green-50').innerHTML = lang['fact1-content']
+          .split('\n\n')
+          .map((p, i) => `<p class="text-lg text-green-800 leading-relaxed${i > 0 ? ' mt-3' : ''}">${p}</p>`)
+          .join('');
+      }
+      
+      // Fact 2 - Parts of a Tree
+      const fact2Btn = document.querySelector('[onclick="toggleFact(\'fact2\'"]');
+      if (fact2Btn) fact2Btn.querySelector('h2').textContent = lang['fact2-heading'];
+      const fact2Content = document.getElementById('fact2');
+      if (fact2Content) {
+        const parts = fact2Content.querySelectorAll('.grid.md\\:grid-cols-3 > .bg-white');
+        if (parts[0]) {
+          parts[0].querySelector('h3').textContent = lang['crown-title'];
+          const crownParagraph = parts[0].querySelector('p');
+          if (crownParagraph) crownParagraph.innerHTML = lang['crown-text'];
+        }
+        if (parts[1]) {
+          parts[1].querySelector('h3').textContent = lang['trunk-title'];
+          const trunkParagraph = parts[1].querySelector('p');
+          if (trunkParagraph) trunkParagraph.innerHTML = lang['trunk-text'];
+        }
+        if (parts[2]) {
+          parts[2].querySelector('h3').textContent = lang['roots-title'];
+          const rootsParagraph = parts[2].querySelector('p');
+          if (rootsParagraph) rootsParagraph.innerHTML = lang['roots-text'];
+        }
+      }
+      
+      // Fact Roots - All About Roots
+      const factRootsBtn = document.querySelector('[onclick="toggleFact(\'fact-roots\'"]');
+      if (factRootsBtn) factRootsBtn.querySelector('h2').textContent = lang['fact-roots-heading'];
+      const factRootsContent = document.getElementById('fact-roots');
+      if (factRootsContent) {
+        factRootsContent.querySelector('.bg-blue-50').innerHTML = lang['fact-roots-content']
+          .split('\n\n')
+          .map((p, i) => `<p class="text-lg text-blue-800 leading-relaxed${i > 0 ? ' mt-3' : ''}">${p}</p>`)
+          .join('');
+      }
+      
+      // Fact Trunk - All About the Trunk
+      const factTrunkBtn = document.querySelector('[onclick="toggleFact(\'fact-trunk\'"]');
+      if (factTrunkBtn) factTrunkBtn.querySelector('h2').textContent = lang['fact-trunk-heading'];
+      const factTrunkContent = document.getElementById('fact-trunk');
+      if (factTrunkContent) {
+        factTrunkContent.querySelector('.bg-red-50').innerHTML = lang['fact-trunk-content']
+          .split('\n\n')
+          .map((p, i) => `<p class="text-lg text-red-800 leading-relaxed${i > 0 ? ' mt-3' : ''}">${p}</p>`)
+          .join('');
+      }
+      
+      // Fact Crown - All About the Crown
+      const factCrownBtn = document.querySelector('[onclick="toggleFact(\'fact-crown\'"]');
+      if (factCrownBtn) factCrownBtn.querySelector('h2').textContent = lang['fact-crown-heading'];
+      const factCrownContent = document.getElementById('fact-crown');
+      if (factCrownContent) {
+        factCrownContent.querySelector('.bg-yellow-50').innerHTML = lang['fact-crown-content']
+          .split('\n\n')
+          .map((p, i) => `<p class="text-lg text-yellow-800 leading-relaxed${i > 0 ? ' mt-3' : ''}">${p}</p>`)
+          .join('');
+      }
+      
+      // Fact 3 - Types of Trees
+      const fact3Btn = document.querySelector('[onclick="toggleFact(\'fact3\'"]');
+      if (fact3Btn) fact3Btn.querySelector('h2').textContent = lang['fact3-heading'];
+      const fact3Content = document.getElementById('fact3');
+      if (fact3Content) {
+        const treeTypes = fact3Content.querySelectorAll('.grid.md\\:grid-cols-2 > .bg-white');
+        if (treeTypes[0]) {
+          treeTypes[0].querySelector('h3').textContent = lang['deciduous-title'];
+          treeTypes[0].innerHTML = `<div class="text-center mb-3"><span class="text-5xl">🍁</span></div>
+            <h3 class="font-bold text-orange-800 text-xl text-center">${lang['deciduous-title']}</h3>
+            <p class="text-orange-700 mt-3 leading-relaxed">${lang['deciduous-text']}</p>`;
+        }
+        if (treeTypes[1]) {
+          treeTypes[1].querySelector('h3').textContent = lang['evergreen-title'];
+          treeTypes[1].innerHTML = `<div class="text-center mb-3"><span class="text-5xl">🌲</span></div>
+            <h3 class="font-bold text-green-800 text-xl text-center">${lang['evergreen-title']}</h3>
+            <p class="text-green-700 mt-3 leading-relaxed">${lang['evergreen-text']}</p>`;
+        }
+      }
+      
+      // Fact 4 - How Trees Grow
+      const fact4Btn = document.querySelector('[onclick="toggleFact(\'fact4\'"]');
+      if (fact4Btn) fact4Btn.querySelector('h2').textContent = lang['fact4-heading'];
+      const fact4Content = document.getElementById('fact4');
+      if (fact4Content) {
+        // Update growth stages - find by emoji first
+        const allDivs = fact4Content.querySelectorAll('.flex-wrap .bg-white span');
+        let seedSpan, sproutSpan, saplingSpan, treeSpan;
+        
+        allDivs.forEach(span => {
+          if (span.textContent.includes('🌰')) {
+            seedSpan = span.nextElementSibling;
+          } else if (span.textContent.includes('🌱')) {
+            sproutSpan = span.nextElementSibling;
+          } else if (span.textContent.includes('🪴')) {
+            saplingSpan = span.nextElementSibling;
+          } else if (span.textContent.includes('🌳')) {
+            treeSpan = span.nextElementSibling;
+          }
+        });
+        
+        if (seedSpan) seedSpan.textContent = lang['seed'];
+        if (sproutSpan) sproutSpan.textContent = lang['sprout'];
+        if (saplingSpan) saplingSpan.textContent = lang['sapling'];
+        if (treeSpan) treeSpan.textContent = lang['tree'];
+        
+        const textContent = fact4Content.querySelector('.bg-emerald-50');
+        if (textContent) {
+          textContent.innerHTML = lang['fact4-content']
+            .split('\n\n')
+            .map((p, i) => `<p class="text-lg text-emerald-800 leading-relaxed${i > 0 ? ' mt-3' : ''}">${p}</p>`)
+            .join('');
+        }
+      }
+      
+      // Fact 5 - Fun Tree Facts!
+      const fact5Btn = document.querySelector('[onclick="toggleFact(\'fact5\'"]');
+      if (fact5Btn) fact5Btn.querySelector('h2').textContent = lang['fact5-heading'];
+      const fact5Content = document.getElementById('fact5');
+      if (fact5Content) {
+        const factBoxes = fact5Content.querySelectorAll('.grid > .bg-white');
+        if (factBoxes[0]) factBoxes[0].querySelector('p').innerHTML = lang['fact5-1'];
+        if (factBoxes[1]) factBoxes[1].querySelector('p').innerHTML = lang['fact5-2'];
+        if (factBoxes[2]) factBoxes[2].querySelector('p').innerHTML = lang['fact5-3'];
+        if (factBoxes[3]) factBoxes[3].querySelector('p').innerHTML = lang['fact5-4'];
+        if (factBoxes[4]) factBoxes[4].querySelector('p').innerHTML = lang['fact5-5'];
+      }
+      
+      // Fact 6 - Why Trees Matter
+      const fact6Btn = document.querySelector('[onclick="toggleFact(\'fact6\'"]');
+      if (fact6Btn) fact6Btn.querySelector('h2').textContent = lang['fact6-heading'];
+      const fact6Content = document.getElementById('fact6');
+      if (fact6Content) {
+        const tealContent = fact6Content.querySelector('.bg-teal-50');
+        
+        // Update intro text
+        const introP = tealContent.querySelector('p:first-of-type');
+        if (introP) introP.innerHTML = lang['fact6-intro'];
+        
+        // Update grid items
+        const gridBoxes = tealContent.querySelectorAll('.grid > .bg-white');
+        if (gridBoxes[0]) {
+          const p = gridBoxes[0].querySelector('p');
+          if (p) p.innerHTML = lang['fact6-1'];
+        }
+        if (gridBoxes[1]) {
+          const p = gridBoxes[1].querySelector('p');
+          if (p) p.innerHTML = lang['fact6-2'];
+        }
+        if (gridBoxes[2]) {
+          const p = gridBoxes[2].querySelector('p');
+          if (p) p.innerHTML = lang['fact6-3'];
+        }
+        if (gridBoxes[3]) {
+          const p = gridBoxes[3].querySelector('p');
+          if (p) p.innerHTML = lang['fact6-4'];
+        }
+        
+        // Update final section
+        const finalBox = tealContent.querySelector('.mt-4.bg-white');
+        if (finalBox) {
+          const finalP = finalBox.querySelector('p:first-of-type');
+          const finalTextP = finalBox.querySelector('p:nth-of-type(2)');
+          if (finalP) finalP.textContent = lang['fact6-final'];
+          if (finalTextP) finalTextP.textContent = lang['fact6-final-text'];
+        }
+      }
+      
+      // Footer
+      const footerText = document.querySelector('footer p:nth-of-type(2)');
+      if (footerText) {
+        footerText.textContent = lang['footer-text'];
+      }
+    }
+
+    function changeLanguage(langCode) {
+      selectedLanguage = langCode;
+      
+      // Update button styles
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        if (btn.dataset.lang === langCode) {
+          btn.classList.add('active');
+          btn.className = 'language-btn active px-4 py-2 rounded-lg bg-white/90 text-gray-800 font-medium border-2 border-white shadow-md cursor-pointer hover:bg-white transition';
+        } else {
+          btn.classList.remove('active');
+          btn.className = 'language-btn px-4 py-2 rounded-lg bg-white/50 text-gray-600 font-medium border-2 border-white/50 shadow-md cursor-pointer hover:bg-white/70 transition';
+        }
+      });
+      
+      // Translate page content
+      translatePage(langCode);
+      
+      // Footer
+      const footerText = document.querySelector('footer p:nth-of-type(2)');
+      if (footerText && lang['footer-text']) {
+        footerText.textContent = lang['footer-text'];
+      }
+    }
+
+    function toggleFact(factId, btn) {
+      const content = document.getElementById(factId);
+      const arrow = btn.querySelector('span:last-child');
+
+      content.classList.toggle('open');
+
+      if (content.classList.contains('open')) {
+        arrow.textContent = '➖';
+        arrow.style.transform = 'rotate(180deg)';
+        playAudio(factId);
+      } else {
+        arrow.textContent = '➕';
+        arrow.style.transform = 'rotate(0deg)';
+        stopAudio();
+      }
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const title = document.getElementById('main-title');
+          const subtitle = document.getElementById('subtitle');
+          const wrapper = document.getElementById('app-wrapper');
+
+          if (title) {
+            title.textContent = config.main_title || defaultConfig.main_title;
+          }
+          if (subtitle) {
+            subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+          }
+
+          const font = config.font_family || defaultConfig.font_family;
+          document.querySelectorAll('*').forEach(el => {
+            el.style.fontFamily = `${font}, sans-serif`;
+          });
+
+          const bgColor = config.background_color || defaultConfig.background_color;
+          if (wrapper) {
+            wrapper.style.background = `linear-gradient(180deg, ${bgColor} 0%, #98D8AA 50%, #4A7C59 100%)`;
+          }
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.card_color || defaultConfig.card_color,
+              set: (value) => {
+                config.card_color = value;
+                window.elementSdk.setConfig({ card_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            },
+            {
+              get: () => config.button_color || defaultConfig.button_color,
+              set: (value) => {
+                config.button_color = value;
+                window.elementSdk.setConfig({ button_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["main_title", config.main_title || defaultConfig.main_title],
+          ["subtitle", config.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d457c0916b3577a',t:'MTc3MjE3MjI2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
